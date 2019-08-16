@@ -1,0 +1,55 @@
+/*
+---
+description: MS-DOS/Batch Scripting
+
+license: MIT-style
+
+authors:
+  - Andi Dittrich
+
+requires:
+  - Core/1.4.5
+
+provides: [EnlighterJS.Language.shell]
+...
+*/
+EJS.Language.shell = new Class ({
+    
+    Extends: EJS.Language.generic,
+    
+    setupLanguage: function(){
+        this.keywords = {
+            keywords: {
+                csv: 'if, else, goto, for, in, do, call, exit, not, exist, errorlevel, defined, equ, neq, lss, leq, gtr, geq, prn, nul, lpt3, lpt2, lpt1, con, com4, com3, com2, com1, aux, shift, cd, dir, echo, setlocal, endlocal, set, pause, copy, append, assoc, at, attrib, break, cacls, cd, chcp, chdir, chkdsk, chkntfs, cls, cmd, color, comp, compact, convert, date, dir, diskcomp, diskcopy, doskey, erase, fs, find, findstr, format, ftype, graftabl, help, keyb, label, md, mkdir, mode, more, move, path, pause, print, popd, pushd, promt, rd, recover, rem, rename, replace, restore, rmdir, shift, sort, start, subst, time, title, tree, type, ver, verify, vol, ping, net, ipconfig, taskkill, xcopy, ren, del',
+                alias: 'kw1'
+            }
+        };
+        
+        this.patterns = {
+            'comments': {
+                pattern: /((?:^\s*|\s+)rem.*$)/gm,
+                alias: 'co1'
+            },
+            'strings': {
+                pattern: this.common.strings,
+                alias: 'st0'
+            },
+            'backticks': {
+                pattern: /`.*?`/gm,
+                alias: 'st1'
+            },
+            'def': {
+                pattern: /^(\s*set\s+\w+)=/gm,
+                alias: 'kw4'
+            },
+            'vars': {
+                pattern: /(\%\w+\%)\b/gim,
+                alias: 'kw4'
+            },
+            'functions': {
+                pattern: /^\s*:\w+\s*/gm,
+                alias: 'kw3'
+            }
+        };
+    }
+});
